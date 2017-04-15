@@ -143,22 +143,22 @@ class Controller:
 		deltay=yb-ya
 		if deltax<0:
 			tb=math.pi+atan(deltay/deltax)
-		else
-			tb=atan(deltay/deltax)
+		else:
+			tb=math.atan(deltay/deltax)
 		
 		d= math.sqrt(deltax**2+deltay**2)
 
 		alpha=2*(tb-ta)
 
-		R=d/(2*math.sin(math.mod(alpha/2)))
+		R=d/(2*math.sin(abs(alpha/2)))
 		
 
 		nl=(alpha*(2*R-w))/(4*math.pi*rel)
 		nr=(alpha*(2*R+w))/(4*math.pi*rel)
 		
-		print 'Posicion robot inicial [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y)
+		#print 'Posicion robot inicial [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y)
 		
-		R.nSteps(nl,nr)
+		R.nSteps(int(round(nl)),int(round(nr)))
 	
 		print 'Posicion robot final [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y) 
 		R.show_distance()

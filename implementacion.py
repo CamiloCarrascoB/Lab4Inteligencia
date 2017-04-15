@@ -115,28 +115,52 @@ class Controller:
 		
 		##PARTE 3
 		
-		print 'Posicion robot inicial [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y) 
+		#print 'Posicion robot inicial [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y) 
 	
-		tb=math.atan((yb-ya)/(xb-xa))
-		deltaA=math.degrees(tb)-ta
+		#tb=math.atan((yb-ya)/(xb-xa))
+		#deltaA=math.degrees(tb)-ta
 
 		#Primer Movimiento
 
-		n1=(math.radians(deltaA)*w)/(4*math.pi*rel)
-		R.nSteps(-n1,n1)
+		#n1=(math.radians(deltaA)*w)/(4*math.pi*rel)
+		#R.nSteps(-n1,n1)
 		
 
 		#Segundo Movimiento
 		
-		d=math.sqrt((xa-xb)**2+(yb-ya)**2)
-		n2=d/(2*math.pi*rel)
-		R.nSteps(n2,n2)	
+		#d=math.sqrt((xa-xb)**2+(yb-ya)**2)
+		#n2=d/(2*math.pi*rel)
+		#R.nSteps(n2,n2)	
 
-		print 'Posicion robot final [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y) 
-		R.show_distance()
+		#print 'Posicion robot final [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y) 
+		#R.show_distance()
         
 
 		##PARTE 4
 
+		
+		deltax=xb-xa
+		deltay=yb-ya
+		if deltax<0:
+			tb=math.pi+atan(deltay/deltax)
+		else
+			tb=atan(deltay/deltax)
+		
+		d= math.sqrt(deltax**2+deltay**2)
+
+		alpha=2*(tb-ta)
+
+		R=d/(2*math.sin(math.mod(alpha/2)))
+		
+
+		nl=(alpha*(2*R-w))/(4*math.pi*rel)
+		nr=(alpha*(2*R+w))/(4*math.pi*rel)
+		
+		print 'Posicion robot inicial [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y)
+		
+		R.nSteps(nl,nr)
+	
+		print 'Posicion robot final [m]: x = ' + str(R.pose_x)+'; y = ' +str(R.pose_y) 
+		R.show_distance()
 
 if __name__ == "__main__": Controller()
